@@ -2,10 +2,11 @@ package com.JavaBasics;
 
 public class JavaVaraiables {
 
-	int z = 10;// instance variable of type integer declared outside a method and inside class
+	int z;// instance variable of type integer declared outside a method and inside class
 	static String str = "learningJava";// static variable of type String
 	static char ch = 'h';// static variable of type character
 	static int j = 7;// static variable of type integer
+	boolean flag;
 	
 	//for single line comments
 	
@@ -35,11 +36,15 @@ public class JavaVaraiables {
 		JavaVaraiables obj = new JavaVaraiables();
 		obj.sum(3, 4, 5);
 		obj.sub(5, 1);
+		System.out.println("z before initalizing:" + obj.z);
 		obj.z = 9;
-		System.out.println("z:" + obj.z);
+		System.out.println("z after initalizing:" + obj.z);
 		printStatic();
 		j++;
 		System.out.println(j);
+		System.out.println("boolean flag before initalizing:" + obj.flag);
+		obj.flag=true;
+		System.out.println("boolean flag after initalizing:" + obj.flag);
 	}
 
 }
