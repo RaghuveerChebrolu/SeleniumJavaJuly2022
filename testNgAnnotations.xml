@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="Suite">
+	<test name="Test">
+		<classes>
+			<class name="com.testNg.testNgAnnotations">
+				<methods>
+					<!-- <include name="testCase2"></include>
+					<include name="testCase4"></include> -->
+					<exclude name = "testCase1"></exclude>
+					<exclude name = "testCase5"></exclude>
+				</methods>
+			</class>
+			<!-- <class name="com.selenium.LaunchBrowserAndVisitFlipkart"> <Methods> 
+				<inlcude name=""></inlcude> </Methods> </class> -->
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
