@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,20 +21,28 @@ public class LibraryFunctions {
 	public static Properties ObjProperties;
 	public static WebDriver driver;
 
+	/*
+	 * Raghu : This method is used read the information provided
+	 * in the properties file   
+	 */
 	public static void ReadPropertiesFile() throws IOException {
 		try {
-			System.out.println(System.getProperty("user.dir"));
+			//System.out.println(System.getProperty("user.dir"));
 			File objFile = new File(System.getProperty("user.dir") + "//src//test//resources//config.properties");
 			FileInputStream objFileInput = new FileInputStream(objFile);
 			ObjProperties = new Properties();
 			ObjProperties.load(objFileInput);
-			System.out.println(ObjProperties.getProperty("GmoOnlineUrl"));
+			//System.out.println(ObjProperties.getProperty("GmoOnlineUrl"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/*
+	 * Raghu : This method is used to get the browser information from properties file , launch 
+	 * the respective browser and application URL  
+	 */
 	public static void LaunchBrowser() {
 		String browser =ObjProperties.getProperty("browser");
 		switch(browser) {
@@ -62,6 +71,8 @@ public class LibraryFunctions {
 		}
 		driver.get(ObjProperties.getProperty("GmoOnlineUrl"));
 		driver.manage().window().maximize();
+		//implicit wait : Global waiting mechanism which is applicable for all WebElements in we page.
+		driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
 	}
 
 }
