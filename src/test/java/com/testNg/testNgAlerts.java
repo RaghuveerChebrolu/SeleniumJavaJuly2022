@@ -1,6 +1,7 @@
 package com.testNg;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.utility.Constants;
 import com.utility.LibraryFunctions;
@@ -71,7 +72,8 @@ public class testNgAlerts extends  LibraryFunctions{
 	  Assert.assertEquals(Alert3, ObjProperties.getProperty("Alert3Test"), "Alert3 is not handled properly");
 	  ObjAlert3.dismiss();
 	  String confirmResultText = driver.findElement(By.id("confirmResult")).getText();
-	  Assert.assertEquals(confirmResultText, ObjProperties.getProperty("TextOfconfirmResultWhenUserSelectedCancel"), "You Selected Cancel messsgae is not displayed");
+	  SoftAssert SoftAssert = new SoftAssert();
+	  SoftAssert.assertEquals(confirmResultText, ObjProperties.getProperty("TextOfconfirmResultWhenUserSelectedCancel"), "You Selected Cancel messsgae is not validated");
 	  
 	  
 	  //PromptBox Alert
@@ -80,7 +82,8 @@ public class testNgAlerts extends  LibraryFunctions{
 	  ObjAlert4.sendKeys(ObjProperties.getProperty("PromptBoxAlertMessage"));
 	  ObjAlert4.accept();
 	  String  promptResultText = driver.findElement(By.id("promptResult")).getText();
-	  Assert.assertEquals(promptResultText, "You entered "+ ObjProperties.getProperty("PromptBoxAlertMessage"), "You Entered User Message is not displayed");
+	  SoftAssert.assertEquals(promptResultText, "You entered "+ ObjProperties.getProperty("PromptBoxAlertMessage"), "You Entered User Message is not vaidated");
+	  SoftAssert.assertAll();
   }
   
 
