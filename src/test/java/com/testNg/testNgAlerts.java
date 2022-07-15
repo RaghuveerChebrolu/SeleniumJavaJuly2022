@@ -36,6 +36,7 @@ public class testNgAlerts extends  LibraryFunctions{
 	  driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 	  String titleOfDemoQaAlerts = driver.getTitle();
 	  System.out.println("titleOfDemoQaAlerts: "+titleOfDemoQaAlerts);
+	  int a = Constants.ExternalFrameBackPackQTY;
 	  Assert.assertEquals(titleOfDemoQaAlerts,ObjProperties.getProperty("DemoQaAlertsTitle"));
   }
   
