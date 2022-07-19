@@ -38,6 +38,11 @@ public class LibraryFunctions {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public static void WaitingForPageToLoad(int time){
+		LibraryFunctions.driver.manage().timeouts().pageLoadTimeout(time, TimeUnit.SECONDS);
+	}
 
 	/*
 	 * Raghu : This method is used to get the browser information from properties file , launch 
