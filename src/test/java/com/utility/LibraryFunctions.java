@@ -7,12 +7,17 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -20,6 +25,7 @@ public class LibraryFunctions {
 
 	public static Properties ObjProperties;
 	public static WebDriver driver;
+	public static Actions objActions;
 
 	/*
 	 * Raghu : This method is used read the information provided
@@ -79,5 +85,32 @@ public class LibraryFunctions {
 		//implicit wait : Global waiting mechanism which is applicable for all WebElements in we page.
 		driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
 	}
+	
+	public static void DoubleClick(By element) {
+		WebElement DoubleClick = LibraryFunctions.driver.findElement(element);
+		objActions = new Actions(driver);
+		objActions.doubleClick(DoubleClick).build().perform();
+	}
+	
+
+	public static void RightClickonWebElement(By element) {
+		WebElement RightClick = LibraryFunctions.driver.findElement(element);
+		objActions = new Actions(driver);
+		objActions.contextClick(RightClick).build().perform();
+		
+	}
+	
+	public static void DragAndDrop(By draggable, By droppable) {
+		WebElement DragElement_Source = LibraryFunctions.driver.findElement(draggable);
+		WebElement DropElement_Destination = LibraryFunctions.driver.findElement(droppable);
+		objActions = new Actions(driver);
+		WebDriverWait Wait = new WebDriverWait(driver,60); 
+		Wait.until(ExpectedConditions.elementToBeClickable(DragElement_Source));
+		objActions.clickAndHold(DragElement_Source);
+		objActions.moveToElement(DropElement_Destination);
+		objActions.build().perform();
+		//objActions.dragAndDrop(DragElement_Source, DropElement_Destination).build().perform();
+	}
+
 
 }

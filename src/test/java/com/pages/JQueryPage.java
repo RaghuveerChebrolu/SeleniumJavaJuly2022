@@ -7,16 +7,19 @@ import org.openqa.selenium.interactions.Actions;
 import com.utility.LibraryFunctions;
 
 public class JQueryPage {
-	public static Actions objActions;
 	
-	static By RightClickMe = By.xpath("//span[contains(text(),'right click me')]");
+	public static By RightClickMe = By.xpath("//span[contains(text(),'right click me')]");
+	public static By Paste = By.xpath("//span[text()='Paste']");
+	public static By Copy = By.xpath("//span[text()='Copy']");
+	public static By Frame = By.xpath("//iframe");
+	public static By DoubleClickBox = By.xpath("//span[text()='Double click the block']/preceding-sibling::div");
+	public static By Draggable = By.id("draggable");
+	public static By Droppable = By.id("droppable");
+
 	
-	
-	public static void RightCLickonWebElement() {
-		objActions = new Actions(LibraryFunctions.driver);
-		WebElement RightClick = LibraryFunctions.driver.findElement(RightClickMe);
-		objActions.contextClick(RightClick).build().perform();
-		
+	public void clickAction(By element) {
+		LibraryFunctions.driver.findElement(element).click();;
 	}
+	
 
 }
