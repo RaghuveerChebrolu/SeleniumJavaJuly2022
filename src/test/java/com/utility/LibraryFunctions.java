@@ -1,6 +1,6 @@
 package com.utility;
 
-import java.io.File;
+import java.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +26,7 @@ public class LibraryFunctions {
 	public static Properties ObjProperties;
 	public static WebDriver driver;
 	public static Actions objActions;
+	public static WebDriverWait Wait;
 
 	/*
 	 * Raghu : This method is used read the information provided
@@ -34,8 +35,8 @@ public class LibraryFunctions {
 	public static void ReadPropertiesFile() throws IOException {
 		try {
 			//System.out.println(System.getProperty("user.dir"));
-			File objFile = new File(System.getProperty("user.dir") + "//src//test//resources//config.properties");
-			FileInputStream objFileInput = new FileInputStream(objFile);
+		//	File objFile = new File(System.getProperty("user.dir") + "//src//test//resources//config.properties");
+			FileInputStream objFileInput = new FileInputStream(new String(System.getProperty("user.dir") + "//src//test//resources//config.properties"));
 			ObjProperties = new Properties();
 			ObjProperties.load(objFileInput);
 			//System.out.println(ObjProperties.getProperty("GmoOnlineUrl"));
@@ -104,12 +105,28 @@ public class LibraryFunctions {
 		WebElement DragElement_Source = LibraryFunctions.driver.findElement(draggable);
 		WebElement DropElement_Destination = LibraryFunctions.driver.findElement(droppable);
 		objActions = new Actions(driver);
-		WebDriverWait Wait = new WebDriverWait(driver,60); 
-		Wait.until(ExpectedConditions.elementToBeClickable(DragElement_Source));
+		ExplicitWaitUntilElementToBeClickable(DragElement_Source);
 		objActions.clickAndHold(DragElement_Source);
 		objActions.moveToElement(DropElement_Destination);
 		objActions.build().perform();
 		//objActions.dragAndDrop(DragElement_Source, DropElement_Destination).build().perform();
+	}
+	
+	
+
+	public static void ClickOnWebElement(By newBroswerWindowButton) {
+		objActions = new Actions(driver);
+		WebElement element = LibraryFunctions.driver.findElement(newBroswerWindowButton);
+		ExplicitWaitUntilElementToBeClickable(element);
+		objActions.click(element).build().perform();
+	}
+	
+	
+	
+	//Raghu : Explicit wait : It will wait until the webElement is clickable
+	public static void ExplicitWaitUntilElementToBeClickable(WebElement element){
+		Wait = new WebDriverWait(driver,Constants.ExplicitWait60Sec); 
+		Wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 
