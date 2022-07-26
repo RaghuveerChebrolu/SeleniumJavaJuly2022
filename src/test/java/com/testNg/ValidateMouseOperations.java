@@ -60,7 +60,7 @@ public class ValidateMouseOperations extends JQueryPage {
 		// pixels
 		// js.executeScript("window.scrollBy(-240,0)");//to scroll right side by 240
 		// pixel
-		WebElement FrameElement = LibraryFunctions.driver.findElement(JQueryPage.Frame);
+		WebElement FrameElement = LibraryFunctions.driver.findElement(Frame);
 		js.executeScript("arguments[0].scrollIntoView(true);", FrameElement);
 		LibraryFunctions.driver.switchTo().frame(FrameElement);
 		LibraryFunctions.DoubleClick(DoubleClickBox);
