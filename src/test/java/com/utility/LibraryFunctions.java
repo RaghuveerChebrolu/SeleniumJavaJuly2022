@@ -4,6 +4,8 @@ import java.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -11,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -63,8 +66,17 @@ public class LibraryFunctions {
 			driver=new InternetExplorerDriver();
 			break;
 		case "chrome":
-			WebDriverManager.chromedriver().setup();;
-			driver=new ChromeDriver();
+			WebDriverManager.chromedriver().setup();
+			//driver = new ChromeDriver();
+			ChromeOptions objChromeOptions = new ChromeOptions();
+			objChromeOptions.setAcceptInsecureCerts(true);
+			// driver= new ChromeDriver(objChromeOptions);
+			Map<String, Object> chromePrefs = new HashMap<String, Object>();
+			chromePrefs.put("profile.default_content_settings.popups", 0);
+			chromePrefs.put("download.prompt_for_download", false);
+			chromePrefs.put("download.default_directory", System.getProperty("user.dir"));
+			objChromeOptions.setExperimentalOption("prefs", chromePrefs);
+			driver = new ChromeDriver(objChromeOptions);
 			break;
 		case "edge":
 			WebDriverManager.edgedriver().setup();
