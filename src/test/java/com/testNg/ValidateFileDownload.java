@@ -9,6 +9,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -62,8 +63,21 @@ public class ValidateFileDownload extends JQueryPage {
 		js.executeScript("window.scrollBy(0,400)");//to scroll Vertically down by 400// pixels
 		
 		LibraryFunctions.driver.findElement(FileDownloadPage.sample100kbFile).click();
-	
+		Thread.sleep(8000);
+		File objFile = new File(System.getProperty("user.dir"));
+		File[] Allfiles = objFile.listFiles();
 		
+		for(File IndidvidualFile : Allfiles) {
+			String FileNane = IndidvidualFile.getName();
+			System.out.println("FileNane:"+FileNane);
+			Boolean fileFoundFlag = false;
+			if(FileNane.contains("100kB")) {
+				fileFoundFlag=true;
+				File IdentifiedDownloadedFile = new File(FileNane)	;	
+				Assert.assertTrue(fileFoundFlag, "File Download  is not va;idated");
+				IdentifiedDownloadedFile.deleteOnExit();
+			}
+		}
 	}
 	
 

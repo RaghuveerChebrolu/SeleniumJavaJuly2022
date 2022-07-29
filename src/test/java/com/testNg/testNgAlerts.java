@@ -51,6 +51,7 @@ public class testNgAlerts extends  LibraryFunctions{
 	  Assert.assertEquals(Alert1, ObjProperties.getProperty("Alert1Test"), "Alert1 is not handled properly");
 	  ObjAlert1.accept();
 	  
+	  Thread.sleep(5000);
 	  
 	  //Timer Alert
 	  driver.findElement(By.id("timerAlertButton")).click();
@@ -84,6 +85,13 @@ public class testNgAlerts extends  LibraryFunctions{
 	  ObjAlert4.accept();
 	  String  promptResultText = driver.findElement(By.id("promptResult")).getText();
 	  SoftAssert.assertEquals(promptResultText, "You entered "+ ObjProperties.getProperty("PromptBoxAlertMessage"), "You Entered User Message is not vaidated");
+	  
+	  try {
+		TakeScreenShot("ValidateAlertsInsideDemoQA");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	  SoftAssert.assertAll();
   }
   

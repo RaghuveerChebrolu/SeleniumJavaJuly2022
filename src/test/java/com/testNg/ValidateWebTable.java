@@ -32,6 +32,7 @@ import com.utility.LibraryFunctions;
 public class ValidateWebTable extends JQueryPage {
 	
 	public static Iterator<String> itr ;
+	
 
 	@Test(priority = 0)
 

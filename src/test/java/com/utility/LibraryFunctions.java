@@ -1,15 +1,22 @@
 package com.utility;
 
 import java.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,6 +26,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -141,5 +149,58 @@ public class LibraryFunctions {
 		Wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
+	public static void waitForPageToLoad() {
+		ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
+			}
+		};
+		// explicit wait -> Applicable for one webEllement
+		WebDriverWait wait = new WebDriverWait(driver, 120);// 120 seconds
+		wait.until(pageLoadCondition);
+	}
+	
+	/* Author : Raghuveer
+	 * This method is used to take screen shot and store the screen shots in side ScreenShot folder
+	 */
+	public static void TakeScreenShot() {
+		try {
+		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String destination = System.getProperty("user.dir") + "//ScreenShots//" + dateName + "captured.jpeg";
+		FileUtils.copyFile(src, new File(destination));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/* Author : Raghuveer
+	 * This method is used to take screen shot and store the screen shots in side ScreenShot folder
+	 */
+	public static String TakeScreenShot(String testcaseName) throws IOException {
+		
+		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String destination = System.getProperty("user.dir") + "//ScreenShots//" + dateName + testcaseName+"captured.jpeg";
+		FileUtils.copyFile(src, new File(destination));
+		return destination;
+		
+	}
+	
+	/* Author : Raghuveer
+	 * This method is used to take screen shot and store the screen shots in side ScreenShot folder
+	 */
+	public static void TakeScreenShotofSpecifiedWebElement(WebElement element) {
+		try {
+		File src = element.getScreenshotAs(OutputType.FILE);
+		String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String destination = System.getProperty("user.dir") + "//ScreenShots//" + dateName + "captured.jpeg";
+		FileUtils.copyFile(src, new File(destination));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
