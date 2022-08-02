@@ -8,11 +8,15 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -38,7 +42,7 @@ public class LibraryFunctions {
 	public static WebDriver driver;
 	public static Actions objActions;
 	public static WebDriverWait Wait;
-
+	public static HashMap<String,String> hmap = new HashMap<String,String>();
 	/*
 	 * Raghu : This method is used read the information provided
 	 * in the properties file   
@@ -202,5 +206,52 @@ public class LibraryFunctions {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public static HashMap<String, String> ReadExcelFile(XSSFSheet objWorkbookSheet, int row) {
+		DataFormatter ObjFormatter = new DataFormatter();
+		hmap.put("RunMode",objWorkbookSheet.getRow(row).getCell(0).getStringCellValue());
+		hmap.put("TestCaseName",objWorkbookSheet.getRow(row).getCell(1).getStringCellValue());
+		hmap.put("FirstName",objWorkbookSheet.getRow(row).getCell(2).getStringCellValue());
+		hmap.put("LastName",objWorkbookSheet.getRow(row).getCell(3).getStringCellValue());
+		hmap.put("Address",objWorkbookSheet.getRow(row).getCell(4).getStringCellValue());
+		hmap.put("EmailAddress",objWorkbookSheet.getRow(row).getCell(5).getStringCellValue());
+		
+		hmap.put("PhoneNumber", ObjFormatter.formatCellValue(objWorkbookSheet.getRow(row).getCell(6)));
+		
+		hmap.put("Gender",objWorkbookSheet.getRow(row).getCell(7).getStringCellValue());
+		hmap.put("Hobbies",objWorkbookSheet.getRow(row).getCell(8).getStringCellValue());
+		hmap.put("Languages",objWorkbookSheet.getRow(row).getCell(9).getStringCellValue());
+		hmap.put("Skills",objWorkbookSheet.getRow(row).getCell(10).getStringCellValue());
+		hmap.put("Country",objWorkbookSheet.getRow(row).getCell(11).getStringCellValue());
+		hmap.put("SelectCountry",objWorkbookSheet.getRow(row).getCell(12).getStringCellValue());
+		
+		hmap.put("DOB_YY",ObjFormatter.formatCellValue(objWorkbookSheet.getRow(row).getCell(13)));
+		
+		hmap.put("DOB_MM",objWorkbookSheet.getRow(row).getCell(14).getStringCellValue());
+		
+		hmap.put("DOB_DD",ObjFormatter.formatCellValue(objWorkbookSheet.getRow(row).getCell(15)));
+		
+		hmap.put("Password",objWorkbookSheet.getRow(row).getCell(16).getStringCellValue());
+		hmap.put("confirmPassword	",objWorkbookSheet.getRow(row).getCell(17).getStringCellValue());
+		
+		
+		return hmap;
+
+	}
+	
+	public static void SelectValueFromDropDown(List<WebElement> AllElements, String DropDownValue) {
+	
+		for(int i =0; i<AllElements.size();i++) {
+			String IndividualValue = AllElements.get(i).getText();
+			System.out.println("IndividualValue at index: "+i+"is "+IndividualValue);
+			if(IndividualValue.equalsIgnoreCase(DropDownValue)) {
+				AllElements.get(i).click();
+				break;
+			}
+		}
+		
+	}
+
 
 }
