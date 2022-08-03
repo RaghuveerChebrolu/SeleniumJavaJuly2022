@@ -15,6 +15,8 @@ public class RegisterDataDriven {
 	public static By MoviesChecbox= By.id("checkbox2");
 	public static By hockeyChecbox= By.id("checkbox3");
 	
+	
+	public static By closeIconOFLanguageSelected= By.xpath("//span[@class='ui-icon ui-icon-close']");
 	public static By Languages= By.id("msdd");
 	public static By All_languages= By.xpath("//div[@id='msdd']/following-sibling::div/ul/li/a");
 	
@@ -22,13 +24,19 @@ public class RegisterDataDriven {
 	public static By Tag_skills= By.xpath("//*[text()='Skills']");
 	public static By Skills= By.id("Skills");
 	public static By Allskills= By.xpath("//select[@id='Skills']/option");
+	
+	public static By selectCountry = By.xpath("//span[@role='combobox']");
+	public static By AllCountries = By.xpath("//ul[@id='select2-country-results']/li");
+	
+	public static By DOB_Year = By.xpath("//select[@id='yearbox']");
+	public static By AllYears = By.xpath("//select[@id='yearbox']/option");
+	public static By DOB_Month = By.xpath("//select[@placeholder='Month']");
+	public static By AllMonths = By.xpath("//select[@placeholder='Month']/option");
+	public static By DOB_Day = By.xpath("//select[@id='daybox']");
+	public static By AllDays = By.xpath("//select[@id='daybox']/option");
+	public static By firstpassword = By.id("firstpassword");
+	public static By secondpassword = By.id("secondpassword");
 
-	 
-	
-	
-	
-	
-	
-	
-	
+
+
 }

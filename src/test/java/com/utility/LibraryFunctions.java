@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
@@ -233,7 +234,7 @@ public class LibraryFunctions {
 		hmap.put("DOB_DD",ObjFormatter.formatCellValue(objWorkbookSheet.getRow(row).getCell(15)));
 		
 		hmap.put("Password",objWorkbookSheet.getRow(row).getCell(16).getStringCellValue());
-		hmap.put("confirmPassword	",objWorkbookSheet.getRow(row).getCell(17).getStringCellValue());
+		hmap.put("confirm_password",objWorkbookSheet.getRow(row).getCell(17).getStringCellValue());
 		
 		
 		return hmap;
@@ -244,12 +245,23 @@ public class LibraryFunctions {
 	
 		for(int i =0; i<AllElements.size();i++) {
 			String IndividualValue = AllElements.get(i).getText();
-			System.out.println("IndividualValue at index: "+i+"is "+IndividualValue);
+			//System.out.println("IndividualValue at index: "+i+"is "+IndividualValue);
 			if(IndividualValue.equalsIgnoreCase(DropDownValue)) {
 				AllElements.get(i).click();
 				break;
 			}
 		}
+		
+	}
+	
+
+	public static void WriteToExcelFile(XSSFWorkbook objWorkBook, XSSFSheet objSheet, int row) {
+		objSheet = objWorkBook.getSheet(ObjProperties.getProperty("DataDrienSheetName"));
+		XSSFCellStyle CellStyle = objWorkBook.createCellStyle();
+		// CellStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		System.out.println("Row Number in excel is :" + row);
+		objSheet.getRow(row).createCell(18).setCellValue("PASS");
+		objSheet.getRow(row).getCell(18).setCellStyle(CellStyle);
 		
 	}
 

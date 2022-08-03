@@ -3,6 +3,7 @@ package com.DataDriven;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,8 +45,7 @@ public class ValidateDataDriven extends JQueryPage {
 	public void ValidateTitleOfWebTablePage() {
 		LibraryFunctions.driver.navigate().to(LibraryFunctions.ObjProperties.getProperty("AutomationRegister"));
 		LibraryFunctions.WaitingForPageToLoad(Constants.PageLoadTimeOut90Sec);
-		//JavascriptExecutor js = (JavascriptExecutor) LibraryFunctions.driver;
-		//js.executeScript("window.scrollBy(0,400)");//to scroll Vertically down by 400// pixels
+		
 		String TitleOfRegisterPage = LibraryFunctions.driver.getTitle();
 		System.out.println("TitleOfRegisterPage:"+TitleOfRegisterPage);
 		Assert.assertEquals(TitleOfRegisterPage, LibraryFunctions.ObjProperties.getProperty("TitleOfRegisterPage"),
@@ -62,7 +62,12 @@ public class ValidateDataDriven extends JQueryPage {
 			XSSFSheet objSheet = objWorkBook.getSheet("TestData");
 			int NumberOfRows = objSheet.getLastRowNum();
 			for(int row =1 ; row<=NumberOfRows ; row++) {
+				
 				hmap = LibraryFunctions.ReadExcelFile(objSheet, row);
+				
+				if(hmap.get("RunMode").equalsIgnoreCase(LibraryFunctions.ObjProperties.getProperty("RunModeInTestDataExcelDataDrivenApproach"))) {
+					
+				
 				LibraryFunctions.driver.findElement(RegisterDataDriven.FristName).clear();
 				LibraryFunctions.driver.findElement(RegisterDataDriven.FristName).sendKeys(hmap.get("FirstName"));
 				
@@ -92,6 +97,13 @@ public class ValidateDataDriven extends JQueryPage {
 					LibraryFunctions.driver.findElement(RegisterDataDriven.hockeyChecbox).click();
 				}
 				
+				JavascriptExecutor js = (JavascriptExecutor) LibraryFunctions.driver;
+				js.executeScript("window.scrollBy(0,500)");//to scroll Vertically down by 500// pixels
+				
+				if(row>1) {
+					LibraryFunctions.driver.findElement(RegisterDataDriven.closeIconOFLanguageSelected).click();
+				}
+				
 				LibraryFunctions.driver.findElement(RegisterDataDriven.Languages).click();
 				List<WebElement> AllLanguages = LibraryFunctions.driver.findElements(RegisterDataDriven.All_languages);
 				LibraryFunctions.SelectValueFromDropDown(AllLanguages, hmap.get("Languages"));
@@ -102,12 +114,41 @@ public class ValidateDataDriven extends JQueryPage {
 				List<WebElement> AllSkills = LibraryFunctions.driver.findElements(RegisterDataDriven.Allskills);
 				LibraryFunctions.SelectValueFromDropDown(AllSkills, hmap.get("Skills"));
 				
+				LibraryFunctions.driver.findElement(RegisterDataDriven.selectCountry).click();
+				List<WebElement> AllCountries = LibraryFunctions.driver.findElements(RegisterDataDriven.AllCountries);
+				LibraryFunctions.SelectValueFromDropDown(AllCountries, hmap.get("SelectCountry"));
 				
+				LibraryFunctions.driver.findElement(RegisterDataDriven.DOB_Year).click();
+				List<WebElement> AllYears = LibraryFunctions.driver.findElements(RegisterDataDriven.AllYears);
+				LibraryFunctions.SelectValueFromDropDown(AllYears, hmap.get("DOB_YY"));
 				
-				//LibraryFunctions.driver.findElement(RegisterDataDriven.Adress).sendKeys(hmap.get("Address"));
-				//LibraryFunctions.driver.findElement(RegisterDataDriven.Adress).sendKeys(hmap.get("Address"));
-				//LibraryFunctions.driver.findElement(RegisterDataDriven.Adress).sendKeys(hmap.get("Address"));
+				LibraryFunctions.driver.findElement(RegisterDataDriven.DOB_Month).click();
+				List<WebElement> AllMonths = LibraryFunctions.driver.findElements(RegisterDataDriven.AllMonths);
+				LibraryFunctions.SelectValueFromDropDown(AllMonths, hmap.get("DOB_MM"));
+				
+				LibraryFunctions.driver.findElement(RegisterDataDriven.DOB_Day).click();
+				List<WebElement> AllDays = LibraryFunctions.driver.findElements(RegisterDataDriven.AllDays);
+				LibraryFunctions.SelectValueFromDropDown(AllDays, hmap.get("DOB_DD"));
+				
+				LibraryFunctions.driver.findElement(RegisterDataDriven.firstpassword).clear();
+				LibraryFunctions.driver.findElement(RegisterDataDriven.firstpassword).sendKeys(hmap.get("Password"));
+				
+				LibraryFunctions.driver.findElement(RegisterDataDriven.secondpassword).clear();
+				LibraryFunctions.driver.findElement(RegisterDataDriven.secondpassword).sendKeys(hmap.get("confirm_password"));
+				
+				FileOutputStream objFileOutput = new FileOutputStream(ObjFile);
+				LibraryFunctions.WriteToExcelFile(objWorkBook,objSheet,row);
+				
+				objWorkBook.write(objFileOutput);
+				}else {
+					int count = row+1;
+					System.out.println("Run Mode is not marked as YES for Row number:"+count);
+				}
+				
+			
 			}
+			objWorkBook.close();
+			ObjFileInputStream.close();
 	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -117,8 +158,6 @@ public class ValidateDataDriven extends JQueryPage {
 	}
 
 
-
-	
 
 	@BeforeMethod
 	public void beforeMethod() {
